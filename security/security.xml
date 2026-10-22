@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+
+    <data>
+
+        <!-- MAKEUP STUDIO CATEGORY -->
+        <record id="module_category_makeup_studio"
+                model="ir.module.category">
+
+            <field name="name">Makeup Studio</field>
+            <field name="description">
+                Makeup Studio Access Rights
+            </field>
+            <field name="sequence">20</field>
+
+        </record>
+       <!-- SALON OWNER GROUP -->
+<record id="group_makeup_owner" model="res.groups">
+    <field name="name">Salon Owner</field>
+
+    <field name="category_id"
+           ref="module_category_makeup_studio"/>
+
+    <field name="implied_ids"
+           eval="[(4, ref('group_makeup_manager'))]"/>
+</record>
+
+        <!-- STAFF GROUP -->
+        <record id="group_makeup_staff"
+                model="res.groups">
+
+            <field name="name">Staff</field>
+
+            <field name="category_id"
+                   ref="module_category_makeup_studio"/>
+
+        </record>
+
+
+        <!-- MANAGER GROUP -->
+        <record id="group_makeup_manager"
+                model="res.groups">
+
+            <field name="name">Manager</field>
+
+            <field name="category_id"
+                   ref="module_category_makeup_studio"/>
+
+            <field name="implied_ids"
+                   eval="[(4, ref('group_makeup_staff'))]"/>
+
+        </record>
+
+
+        <!-- CLIENT GROUP -->
+        <record id="group_makeup_client"
+                model="res.groups">
+
+            <field name="name">Client</field>
+
+            <field name="category_id"
+                   ref="module_category_makeup_studio"/>
+
+        </record>
+
+    </data>
+
+</odoo>

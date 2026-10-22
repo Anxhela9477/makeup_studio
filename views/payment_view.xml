@@ -1,0 +1,178 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- PAYMENT LIST -->
+        <record id="payment_tree_view" model="ir.ui.view">
+            <field name="name">makeup_studio.payment.tree</field>
+            <field name="model">makeup_studio.payment</field>
+
+            <field name="arch" type="xml">
+                <tree string="Payments">
+
+                    <field name="appointment_id"/>
+                    <field name="client_id"/>
+                    <field name="amount" sum="Total"/>
+                    <field name="payment_method"/>
+                    <field name="payment_status"/>
+                    <field name="payment_date"/>
+                    <field name="points_earned"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- PAYMENT FORM -->
+        <record id="payment_form_view" model="ir.ui.view">
+            <field name="name">makeup_studio.payment.form</field>
+            <field name="model">makeup_studio.payment</field>
+
+            <field name="arch" type="xml">
+
+                <form string="Payment">
+
+                    <header>
+
+                        <button name="action_mark_paid"
+                                string="Mark as Paid"
+                                type="object"
+                                class="btn-primary"
+                                invisible="payment_status != 'unpaid'"/>
+
+                        <field name="payment_status"
+                               widget="statusbar"
+                               statusbar_visible="unpaid,paid,refunded"/>
+
+                    </header>
+
+                    <sheet>
+
+                        <group string="Payment Information">
+
+                            <field name="appointment_id"/>
+
+                            <field name="client_id"
+                                   readonly="1"/>
+
+                            <field name="amount"
+                                   readonly="1"/>
+
+                            <field name="payment_method"/>
+
+                            <field name="payment_date"
+                                   readonly="1"/>
+
+                            <field name="transaction_reference"/>
+
+                        </group>
+
+
+                        <group string="Loyalty Information">
+
+                            <field name="points_earned"
+                                   readonly="1"/>
+
+                            <field name="loyalty_points_awarded"
+                                   readonly="1"/>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <!-- PAYMENT SEARCH / FILTERS -->
+        <record id="payment_search_view" model="ir.ui.view">
+
+            <field name="name">makeup_studio.payment.search</field>
+            <field name="model">makeup_studio.payment</field>
+
+            <field name="arch" type="xml">
+
+                <search string="Payment Report">
+
+                    <field name="appointment_id"/>
+                    <field name="client_id"/>
+                    <field name="payment_date"/>
+
+                    <separator/>
+
+                    <filter name="paid"
+                            string="Paid"
+                            domain="[('payment_status', '=', 'paid')]"/>
+
+                    <filter name="unpaid"
+                            string="Unpaid"
+                            domain="[('payment_status', '=', 'unpaid')]"/>
+
+                    <filter name="refunded"
+                            string="Refunded"
+                            domain="[('payment_status', '=', 'refunded')]"/>
+
+                    <separator/>
+
+                    <filter name="cash"
+                            string="Cash"
+                            domain="[('payment_method', '=', 'cash')]"/>
+
+                    <filter name="card"
+                            string="Card"
+                            domain="[('payment_method', '=', 'card')]"/>
+
+                    <filter name="bank_transfer"
+                            string="Bank Transfer"
+                            domain="[('payment_method', '=', 'bank_transfer')]"/>
+
+
+                    <group expand="0" string="Group By">
+
+                        <filter name="group_status"
+                                string="Payment Status"
+                                context="{'group_by': 'payment_status'}"/>
+
+                        <filter name="group_method"
+                                string="Payment Method"
+                                context="{'group_by': 'payment_method'}"/>
+
+                        <filter name="group_client"
+                                string="Client"
+                                context="{'group_by': 'client_id'}"/>
+
+                    </group>
+
+                </search>
+
+            </field>
+
+        </record>
+
+
+        <!-- NORMAL PAYMENT ACTION -->
+        <record id="action_makeup_payment" model="ir.actions.act_window">
+
+            <field name="name">Payments</field>
+            <field name="res_model">makeup_studio.payment</field>
+            <field name="view_mode">tree,form</field>
+
+        </record>
+
+
+        <!-- PAYMENT REPORT ACTION -->
+        <record id="action_payment_report" model="ir.actions.act_window">
+
+            <field name="name">Payment Report</field>
+            <field name="res_model">makeup_studio.payment</field>
+            <field name="view_mode">tree,form</field>
+            <field name="search_view_id"
+                   ref="payment_search_view"/>
+
+        </record>
+
+    </data>
+</odoo>

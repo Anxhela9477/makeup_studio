@@ -1,0 +1,198 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- USER LIST VIEW -->
+        <record id="user_tree_view" model="ir.ui.view">
+            <field name="name">makeup_studio.user.tree</field>
+            <field name="model">makeup_studio.user</field>
+
+            <field name="arch" type="xml">
+                <tree string="Users">
+
+                    <field name="user_code"
+                           string="ID"/>
+
+                    <field name="name"/>
+
+                    <field name="email"/>
+
+                    <field name="phone"/>
+
+                    <field name="role"/>
+
+                    <field name="loyalty_points"/>
+
+                    <field name="registered_date"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- USER FORM VIEW -->
+        <record id="user_form_view" model="ir.ui.view">
+            <field name="name">makeup_studio.user.form</field>
+            <field name="model">makeup_studio.user</field>
+
+            <field name="arch" type="xml">
+
+                <form string="User">
+
+                    <sheet>
+
+                        <!-- GENERAL INFORMATION -->
+                        <group string="General Information">
+
+                            <field name="user_code"
+                                   string="ID"
+                                   readonly="1"/>
+
+                            <field name="name"/>
+
+                            <field name="email"/>
+
+                            <field name="phone"/>
+
+                            <field name="password"/>
+
+                            <field name="role"/>
+
+                        </group>
+
+
+                        <!-- CLIENT INFORMATION -->
+                        <group string="Client Information"
+                               invisible="role != 'client'">
+
+                            <field name="loyalty_points"/>
+
+                            <field name="registered_date"/>
+
+                        </group>
+
+
+                        <!-- STAFF INFORMATION -->
+             <group string="Staff Information"
+                invisible="role != 'staff'">
+
+              <group string="Working Days">
+                <field name="work_monday"/>
+                <field name="work_tuesday"/>
+                <field name="work_wednesday"/>
+                <field name="work_thursday"/>
+              </group>
+
+             <group string="Working Days">
+             <field name="work_friday"/>
+             <field name="work_saturday"/>
+             <field name="work_sunday"/>
+             </group>
+
+    <group string="Working Schedule">
+        <field name="start_time"
+               widget="float_time"/>
+
+        <field name="end_time"
+               widget="float_time"/>
+
+        <field name="total_worked_hours"/>
+    </group>
+
+    <group string="Employment Information">
+        <field name="salary"/>
+        <field name="hire_date"/>
+        <field name="staff_status"/>
+    </group>
+
+</group>
+
+
+                        <!-- MANAGER INFORMATION -->
+                        <group string="Manager Information"
+                               invisible="role != 'manager'">
+
+                               <group string="Working Days">
+                                    <field name="work_monday"/>
+                                   <field name="work_tuesday"/>
+                                   <field name="work_wednesday"/>
+                                   <field name="work_thursday"/>
+                                   <field name="work_friday"/>
+                                   <field name="work_saturday"/>
+                                   <field name="work_sunday"/>
+                               </group>
+
+                            <field name="start_time"/>
+
+                            <field name="end_time"/>
+
+                            <field name="total_worked_hours"/>
+
+                            
+
+                            <field name="salary"/>
+
+                            <field name="hire_date"/>
+
+                            <field name="staff_status"/>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+
+        <!-- USER ACTION -->
+        <record id="action_makeup_user"
+                model="ir.actions.act_window">
+
+            <field name="name">Users</field>
+
+            <field name="res_model">makeup_studio.user</field>
+
+            <field name="view_mode">tree,form</field>
+
+        </record>
+<!-- STAFF SCHEDULE TREE VIEW -->
+<record id="staff_schedule_tree_view" model="ir.ui.view">
+    <field name="name">makeup_studio.staff.schedule.tree</field>
+    <field name="model">makeup_studio.user</field>
+    <field name="arch" type="xml">
+
+        <tree string="Staff Schedule">
+
+            <field name="user_code"/>
+            <field name="name"/>
+            <field name="staff_status"/>
+
+            <field name="work_monday"/>
+            <field name="work_tuesday"/>
+            <field name="work_wednesday"/>
+            <field name="work_thursday"/>
+            <field name="work_friday"/>
+            <field name="work_saturday"/>
+            <field name="work_sunday"/>
+
+            <field name="start_time" widget="float_time"/>
+            <field name="end_time" widget="float_time"/>
+
+        </tree>
+
+    </field>
+</record>
+
+
+<!-- STAFF SCHEDULE ACTION -->
+<record id="action_staff_schedule" model="ir.actions.act_window">
+    <field name="name">Staff Schedule</field>
+    <field name="res_model">makeup_studio.user</field>
+    <field name="view_mode">tree,form</field>
+    <field name="domain">[('role', '=', 'staff')]</field>
+</record>
+    </data>
+</odoo>

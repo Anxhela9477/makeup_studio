@@ -1,0 +1,97 @@
+
+<odoo>
+
+    <!-- APPOINTMENT PDF REPORT TEMPLATE -->
+    <template id="report_appointment_document">
+
+        <t t-call="web.html_container">
+
+            <t t-call="web.external_layout">
+
+                <div class="page">
+
+                    <h2 style="text-align: center; margin-bottom: 20px;">
+                        Makeup Studio - Appointment Report
+                    </h2>
+
+                    <table class="table table-sm table-bordered"
+                           style="width: 100%; font-size: 11px; margin-top: 20px;">
+
+                        <thead>
+                            <tr style="background-color: #f2f2f2;">
+                                <th>Appointment ID</th>
+                                <th>Date</th>
+                                <th>Client</th>
+                                <th>Staff</th>
+                                <th>Service</th>
+                                <th>Status</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+
+                            <tr t-foreach="docs" t-as="appointment">
+
+                                <td>
+                                    <span t-field="appointment.appointment_code"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="appointment.appointment_datetime"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="appointment.client_id.name"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="appointment.staff_id.name"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="appointment.service_id.name"/>
+                                </td>
+
+                                <td>
+                                    <span t-field="appointment.status"/>
+                                </td>
+
+                            </tr>
+
+                        </tbody>
+
+                    </table>
+
+                    <p t-if="not docs"
+                       style="text-align: center; margin-top: 20px;">
+                        No appointments found for the selected filters.
+                    </p>
+
+                </div>
+
+            </t>
+
+        </t>
+
+    </template>
+
+
+    <!-- APPOINTMENT PDF REPORT ACTION -->
+    <record id="action_report_appointment" model="ir.actions.report">
+
+        <field name="name">Appointment Report</field>
+
+        <field name="model">makeup_studio.appointment</field>
+
+        <field name="report_type">qweb-pdf</field>
+
+        <field name="report_name">makeup_studio.report_appointment_document</field>
+
+        <field name="report_file">makeup_studio.report_appointment_document</field>
+
+        <field name="groups_id"
+               eval="[(4, ref('makeup_studio.group_makeup_manager'))]"/>
+
+    </record>
+
+</odoo>

@@ -1,0 +1,87 @@
+
+<odoo>
+    <data>
+
+        <!-- MAIN MENU -->
+        <menuitem id="makeup_studio_root"
+                  name="Makeup Studio"
+                  sequence="10"/>
+
+        <!-- USERS -->
+        <menuitem id="user_menu"
+                  name="Users"
+                  parent="makeup_studio_root"
+                  action="action_makeup_user"
+                  sequence="10"/>
+
+        <!-- SERVICE -->
+        <menuitem id="service_menu"
+                  name="Service"
+                  parent="makeup_studio_root"
+                  action="action_makeup_service"
+                  sequence="20"/>
+
+        <!-- STAFF SCHEDULE -->
+        <menuitem id="staff_schedule_menu"
+                  name="Staff Schedule"
+                  parent="makeup_studio_root"
+                  action="action_staff_schedule"
+                  sequence="25"/>
+
+        <!-- APPOINTMENTS -->
+        <menuitem id="appointment_menu"
+                  name="Appointment"
+                  parent="makeup_studio_root"
+                  action="action_makeup_appointment"
+                  sequence="30"/>
+
+        <!-- TODAY'S APPOINTMENTS -->
+        <menuitem id="menu_today_appointments"
+                  name="Today's Appointments"
+                  parent="makeup_studio_root"
+                  action="action_today_appointments"
+                  sequence="35"/>
+
+        <!-- PAYMENTS -->
+        <menuitem id="payment_menu"
+                  name="Payments"
+                  parent="makeup_studio_root"
+                  action="action_makeup_payment"
+                  sequence="40"/>
+
+        <!-- PAYMENT REPORT -->
+        <menuitem id="payment_report_menu"
+                  name="Payment Report"
+                  parent="makeup_studio_root"
+                  action="action_payment_report"
+                  sequence="45"/>
+
+        <!-- HOLIDAY REQUESTS -->
+        <menuitem id="holiday_request_menu"
+                  name="Holiday Requests"
+                  parent="makeup_studio_root"
+                  action="action_holiday_request"
+                  sequence="50"/>
+
+        <!-- DISCOUNTS -->
+        <menuitem id="discount_menu"
+                  name="Discounts"
+                  parent="makeup_studio_root"
+                  action="action_makeup_discount"
+                  sequence="60"/>
+
+        <!-- REPORTS MAIN MENU -->
+        <menuitem id="menu_makeup_reports"
+                  name="Reports"
+                  parent="makeup_studio_root"
+                  sequence="80"/>
+
+        <!-- APPOINTMENT REPORT -->
+        <menuitem id="menu_appointment_report"
+                  name="Appointment Report"
+                  parent="menu_makeup_reports"
+                  action="makeup_studio.action_appointment_report_wizard"
+                  sequence="10"/>
+
+    </data>
+</odoo>

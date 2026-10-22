@@ -1,0 +1,183 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- APPOINTMENT TREE VIEW -->
+        <record id="appointment_tree_view" model="ir.ui.view">
+            <field name="name">makeup_studio.appointment.tree</field>
+            <field name="model">makeup_studio.appointment</field>
+            <field name="arch" type="xml">
+
+                <tree string="Appointments">
+                    <field name="appointment_code"/>
+                    <field name="client_id"/>
+                    <field name="service_id"/>
+                    <field name="staff_id"/>
+                    <field name="appointment_datetime"/>
+                    <field name="price"/>
+                    <field name="discount_amount"/>
+                    <field name="final_price"/>
+                    <field name="status"/>
+                </tree>
+
+            </field>
+        </record>
+
+
+        <!-- APPOINTMENT FORM VIEW -->
+        <record id="appointment_form_view" model="ir.ui.view">
+
+            <field name="name">makeup_studio.appointment.form</field>
+            <field name="model">makeup_studio.appointment</field>
+
+            <field name="arch" type="xml">
+
+                <form string="Appointment">
+
+                    <header>
+
+                        <button
+                            name="action_approve"
+                            string="Approve"
+                            type="object"
+                            class="btn-primary"
+                            invisible="status != 'pending'"
+                        />
+
+                        <button
+                            name="action_complete"
+                            string="Complete"
+                            type="object"
+                            class="btn-primary"
+                            invisible="status != 'approved'"
+                        />
+
+                        <button
+                            name="action_cancel"
+                            string="Cancel"
+                            type="object"
+                            invisible="status in ['completed', 'cancelled']"
+                        />
+
+                        <field
+                            name="status"
+                            widget="statusbar"
+                            statusbar_visible="pending,approved,completed,cancelled"
+                        />
+
+                    </header>
+
+                    <sheet>
+
+                        <group>
+
+                            <group string="Appointment Information">
+
+                                <field name="appointment_code" readonly="1"/>
+
+                                <field name="client_id"/>
+
+                                <field name="service_id"/>
+
+                                <field name="staff_id"/>
+
+                                <field name="appointment_datetime"/>
+
+                            </group>
+
+
+                            <group string="Price &amp; Discount">
+
+                                <field name="price" readonly="1"/>
+
+                                <field name="discount_id"/>
+
+                                <field
+                                    name="available_loyalty_points"
+                                    readonly="1"
+                                />
+
+                                <field name="loyalty_points_used"/>
+
+                                <field
+                                    name="discount_amount"
+                                    readonly="1"
+                                />
+
+                                <field
+                                    name="final_price"
+                                    readonly="1"
+                                />
+
+                            </group>
+
+                        </group>
+
+
+                        <group string="Notes">
+
+                            <field name="notes" nolabel="1"/>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+
+        </record>
+
+
+        <!-- APPOINTMENT CALENDAR VIEW -->
+        <record id="appointment_calendar_view" model="ir.ui.view">
+
+            <field name="name">makeup_studio.appointment.calendar</field>
+            <field name="model">makeup_studio.appointment</field>
+
+            <field name="arch" type="xml">
+
+                <calendar
+                    string="Appointment Calendar"
+                    date_start="appointment_datetime"
+                    color="staff_id"
+                    mode="week">
+
+                    <field name="client_id"/>
+                    <field name="service_id"/>
+                    <field name="staff_id"/>
+                    <field name="status"/>
+
+                </calendar>
+
+            </field>
+
+        </record>
+
+
+        <!-- APPOINTMENT ACTION -->
+        <record
+            id="action_makeup_appointment"
+            model="ir.actions.act_window">
+
+            <field name="name">Appointments</field>
+            <field name="res_model">makeup_studio.appointment</field>
+            <field name="view_mode">calendar,tree,form</field>
+
+        </record>
+<!-- TODAY'S APPOINTMENTS ACTION -->
+<record id="action_today_appointments" model="ir.actions.act_window">
+    <field name="name">Today's Appointments</field>
+    <field name="res_model">makeup_studio.appointment</field>
+    <field name="view_mode">tree,form,calendar</field>
+
+    <field name="domain">
+        [
+            ('appointment_datetime', '&gt;=', context_today().strftime('%Y-%m-%d 00:00:00')),
+            ('appointment_datetime', '&lt;=', context_today().strftime('%Y-%m-%d 23:59:59'))
+        ]
+    </field>
+</record>
+    </data>
+</odoo>

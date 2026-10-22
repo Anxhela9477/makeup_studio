@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- HOLIDAY REQUEST LIST VIEW -->
+        <record id="holiday_request_tree_view" model="ir.ui.view">
+            <field name="name">makeup_studio.holiday_request.tree</field>
+            <field name="model">makeup_studio.holiday_request</field>
+
+            <field name="arch" type="xml">
+                <tree string="Holiday Requests">
+
+                    <field name="request_code"
+                           string="Request ID"/>
+
+                    <field name="staff_id"/>
+
+                    <field name="start_date"/>
+
+                    <field name="end_date"/>
+
+                    <field name="status"/>
+
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- HOLIDAY REQUEST FORM VIEW -->
+        <record id="holiday_request_form_view" model="ir.ui.view">
+            <field name="name">makeup_studio.holiday_request.form</field>
+            <field name="model">makeup_studio.holiday_request</field>
+
+            <field name="arch" type="xml">
+
+                <form string="Holiday Request">
+
+                    <header>
+
+                        <button name="action_approve"
+                                string="Approve"
+                                type="object"
+                                class="btn-primary"
+                                invisible="status != 'pending'"/>
+
+                        <button name="action_reject"
+                                string="Reject"
+                                type="object"
+                                invisible="status != 'pending'"/>
+
+                        <button name="action_cancel"
+                                string="Cancel Request"
+                                type="object"
+                                invisible="status in ['approved', 'rejected', 'cancelled']"/>
+
+                        <field name="status"
+                               widget="statusbar"
+                               statusbar_visible="pending,approved,rejected,cancelled"/>
+
+                    </header>
+
+
+                    <sheet>
+
+                        <group string="Holiday Request Information">
+
+                            <field name="request_code"
+                                   string="Request ID"
+                                   readonly="1"/>
+
+                            <field name="staff_id"/>
+
+                            <field name="start_date"/>
+
+                            <field name="end_date"/>
+
+                        </group>
+
+
+                        <group string="Details">
+
+                            <field name="reason"
+                                   placeholder="Reason for requesting day off..."/>
+
+                            <field name="manager_comment"
+                                   placeholder="Manager comment..."/>
+
+                        </group>
+
+                    </sheet>
+
+                </form>
+
+            </field>
+        </record>
+
+        <!-- HOLIDAY REQUEST ACTION -->
+        <record id="action_holiday_request" model="ir.actions.act_window">
+          <field name="name">Holiday Requests</field>
+          <field name="res_model">makeup_studio.holiday_request</field>
+          <field name="view_mode">tree,form</field>
+       </record>
+    </data>
+</odoo>

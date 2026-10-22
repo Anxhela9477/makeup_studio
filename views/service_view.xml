@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+<odoo>
+    <data>
+
+        <!-- SERVICE LIST VIEW -->
+        <record id="service_tree_view" model="ir.ui.view">
+            <field name="name">makeup_studio.service.tree</field>
+            <field name="model">makeup_studio.service</field>
+            <field name="arch" type="xml">
+                <tree string="Services">
+                    <field name="name"/>
+                    <field name="price"/>
+                    <field name="active"/>
+                </tree>
+            </field>
+        </record>
+
+
+        <!-- SERVICE FORM VIEW -->
+        <record id="service_form_view" model="ir.ui.view">
+            <field name="name">makeup_studio.service.form</field>
+            <field name="model">makeup_studio.service</field>
+            <field name="arch" type="xml">
+                <form string="Service">
+
+                    <sheet>
+
+                        <group string="Service Information">
+                            <field name="name"/>
+                            <field name="price"/>
+                            <field name="active"/>
+                            <field name="description"/>
+                        </group>
+
+                        <notebook>
+
+                            <page string="Materials">
+
+                                <field name="material_ids" nolabel="1">
+
+                                    <tree editable="bottom">
+
+                                        <field
+                                            name="inventory_id"
+                                            string="Inventory Product"
+                                        />
+
+                                        <field
+                                            name="quantity_used"
+                                            string="Quantity Used"
+                                        />
+
+                                    </tree>
+
+                                </field>
+
+                            </page>
+
+                        </notebook>
+
+                    </sheet>
+
+                </form>
+            </field>
+        </record>
+
+
+        <!-- SERVICE ACTION -->
+        <record id="action_makeup_service" model="ir.actions.act_window">
+            <field name="name">Services</field>
+            <field name="res_model">makeup_studio.service</field>
+            <field name="view_mode">tree,form</field>
+        </record>
+
+    </data>
+</odoo>
